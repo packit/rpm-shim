@@ -1,0 +1,12 @@
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
+
+WORKDIR /workdir
+COPY . .
+
+ARG INSTALL_DEPS_CMD
+RUN sh -c "${INSTALL_DEPS_CMD}"
+
+RUN python3 -m pip install tox
+
+CMD ["tox", "--workdir", "/workdir"]

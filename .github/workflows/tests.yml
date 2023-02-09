@@ -1,0 +1,30 @@
+name: Test the shim
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - base_image: fedora:latest
+            install_deps_cmd: dnf -y install git-core python3-pip python3-rpm
+          - base_image: centos:stream9
+            install_deps_cmd: dnf -y install git-core python3-pip python3-rpm
+          - base_image: centos:stream8
+            install_deps_cmd: dnf -y install git-core python3-pip python3-rpm
+          - base_image: opensuse/leap:latest
+            install_deps_cmd: zypper -n install git-core python3-pip python3-rpm
+          - base_image: ubuntu:latest
+            install_deps_cmd: apt-get -y update && apt-get -y install git python3-pip python3-rpm
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run the tests
+        env:
+          BASE_IMAGE: ${{ matrix.base_image }}
+          INSTALL_DEPS_CMD: ${{ matrix.install_deps_cmd }}
+        run: make test
