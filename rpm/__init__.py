@@ -88,10 +88,13 @@ def initialize() -> None:
         except ShimAlreadyInitializingError:
             continue
         except Exception as e:
-            logger.error(f"Exception: {e}")
+            logger.debug(f"Exception: {type(e)}: {e}")
             continue
     else:
-        raise ImportError("Failed to import system RPM module")
+        raise ImportError(
+            "Failed to import system RPM module. "
+            "Make sure RPM Python bindings are installed on your system."
+        )
 
 
 # avoid repeated initialization of the shim module
