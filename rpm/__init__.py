@@ -20,6 +20,10 @@ MODULE_NAME = "rpm"
 logger = logging.getLogger(PROJECT_NAME)
 
 
+class ShimAlreadyInitializingError(Exception):
+    pass
+
+
 def get_system_sitepackages() -> List[str]:
     """
     Gets a list of sitepackages directories of system Python interpreter(s).
@@ -71,7 +75,7 @@ def try_path(path: str) -> bool:
     return False
 
 
-def init_module() -> None:
+def initialize() -> None:
     """
     Initializes the shim. Tries to load system RPM module and replace itself with it.
     """
@@ -81,11 +85,23 @@ def init_module() -> None:
             if try_path(path):
                 logger.debug("Import successfull")
                 return
+        except ShimAlreadyInitializingError:
+            continue
         except Exception as e:
-            logger.error(f"Exception: {e}")
+            logger.debug(f"Exception: {type(e)}: {e}")
             continue
     else:
-        raise ImportError("Failed to import system RPM module")
+        raise ImportError(
+            "Failed to import system RPM module. "
+            "Make sure RPM Python bindings are installed on your system."
+        )
 
 
-init_module()
+# avoid repeated initialization of the shim module
+try:
+    _shim_module_initializing_
+except NameError:
+    _shim_module_initializing_: bool = True
+    initialize()
+else:
+    raise ShimAlreadyInitializingError
