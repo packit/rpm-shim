@@ -1,12 +1,15 @@
 ARG BASE_IMAGE
 FROM ${BASE_IMAGE}
 
-WORKDIR /workdir
+COPY entrypoint.sh /entrypoint.sh
+
+WORKDIR /rpm-shim
 COPY . .
 
 ARG INSTALL_DEPS_CMD
 RUN sh -c "${INSTALL_DEPS_CMD}"
 
-RUN python3 -m pip install tox
+RUN python3 -m pip install tox build
 
-CMD ["tox", "--workdir", "/workdir"]
+WORKDIR /
+ENTRYPOINT ["/entrypoint.sh"]
