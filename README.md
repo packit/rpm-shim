@@ -38,7 +38,7 @@ ModuleNotFoundError: No module named 'rpm'
 # install the shim module from PyPI
 (env) $ pip install rpm
 ...
-Successfully installed rpm-0.1
+Successfully installed rpm-0.1.0
 
 # now we can import the bindings
 (env) $ python -c "import rpm; print(rpm.__version__)"
