@@ -44,3 +44,17 @@ Successfully installed rpm-0.1.0
 (env) $ python -c "import rpm; print(rpm.__version__)"
 4.18.0
 ```
+
+## Using RPM bindings with a different Python version than the system Python
+
+On many systems, the shim module will be able to find the system-installed RPM bindings, even if you use a different version of Python (e.g. Fedora 38 ships with Python 3.11 by default, but the shim will also work in a Python 3.10 virtualenv).
+
+On some distributions (especially Debian/Ubuntu ones), it will not work and raise a `ModuleNotFoundError: No module named 'rpm._rpm'`. This is because those distributions encode the Python version in the name of the `_rpm.so` file: `_rpm.cpython-38-x86_64-linux-gnu.so`.
+
+You can make the shim module work on such systems by creating a symlink to the generic `_rpm.so` name:
+
+```bash
+for file in /usr/lib/python3/dist-packages/rpm/_rpm*.cpython-*.so; do
+  sudo ln -s ${file} $(echo ${file} | sed 's/\.cpython[^.]*//');
+done
+```
