@@ -9,7 +9,7 @@ COPY . .
 ARG INSTALL_DEPS_CMD
 RUN sh -c "${INSTALL_DEPS_CMD}"
 
-RUN python3 -m pip install tox build
+RUN python3 -m pip install tox build || python3 -m pip install --break-system-packages tox build
 
 WORKDIR /
 ENTRYPOINT ["/entrypoint.sh"]
