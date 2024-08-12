@@ -41,9 +41,13 @@ def get_system_sitepackages() -> List[str]:
         output = subprocess.check_output(command)
         return json.loads(output.decode())
 
-    majorver, *_ = platform.python_version_tuple()
+    majorver, minorver, _ = platform.python_version_tuple()
     # try platform-python first (it could be the only interpreter present on the system)
-    interpreters = ["/usr/libexec/platform-python", f"/usr/bin/python{majorver}"]
+    interpreters = [
+        "/usr/libexec/platform-python",
+        f"/usr/bin/python{majorver}",
+        f"/usr/bin/python{majorver}.{minorver}",
+    ]
     result = []
     for interpreter in interpreters:
         if not Path(interpreter).is_file():
