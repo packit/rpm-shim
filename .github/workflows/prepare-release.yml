@@ -20,7 +20,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Prepare release content
-        uses: packit/prepare-release@v3
+        uses: packit/prepare-release@v4
         with:
           version: ${{ inputs.version }}
           specfiles:
