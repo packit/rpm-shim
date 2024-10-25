@@ -16,7 +16,7 @@ jobs:
           - base_image: centos:stream9
             install_deps_cmd: dnf -y install git-core python3-pip python3-rpm
           - base_image: registry.access.redhat.com/ubi9:latest
-            install_deps_cmd: dnf -y install git-core python3-pip python3-rpm && python3 -m pip install -U requests
+            install_deps_cmd: dnf -y install git-core python{3,3.11}-pip python3-rpm && python3 -m pip install -U requests && python3.11 -m pip install -U requests
           - base_image: ubi8:latest
             install_deps_cmd: dnf -y install git-core python3-pip python3-rpm
           - base_image: opensuse/leap:latest
