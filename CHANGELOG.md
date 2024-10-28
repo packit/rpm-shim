@@ -1,3 +1,9 @@
+# 0.3.0
+
+- rpm-shim now tries to directly import binary extensions with incompatible suffixes,
+  for instance `_rpm.cpython-39-x86_64-linux-gnu.so`, that would normally fail to be imported
+  automatically while importing `rpm`. (#15)
+
 # 0.2.0
 
 - rpm-shim now considers also system Python interpreter called `python{majorver}.{minorver}`
