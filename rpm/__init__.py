@@ -38,15 +38,20 @@ def get_system_sitepackages_and_suffixes() -> List[Dict[str, List[str]]]:
     def get_sitepackages_and_suffixes(interpreter):
         script = textwrap.dedent(
             """
-            import importlib
-            import importlib.machinery
             import json
             import site
+
+            try:
+                import importlib.machinery
+            except ImportError:
+                suffixes = []
+            else:
+                suffixes = importlib.machinery.EXTENSION_SUFFIXES
             print(
                 json.dumps(
                     {
                         "sitepackages": site.getsitepackages(),
-                        "suffixes": importlib.machinery.EXTENSION_SUFFIXES,
+                        "suffixes": suffixes,
                     }
                 )
             )
