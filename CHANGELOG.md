@@ -1,3 +1,7 @@
+# 0.3.1
+
+- Ignore extension suffixes if the interpreter is Python 2. (#18)
+
 # 0.3.0
 
 - rpm-shim now tries to directly import binary extensions with incompatible suffixes,
