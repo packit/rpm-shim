@@ -12,6 +12,10 @@ def test():
 
     # sanity check
     print("RPM conf dir:", rpm.expandMacro("%getconfdir"))
+    # the spec class should be present, but loading it fails if there is an ABI
+    # mismatch between the current interpreter and the site packages from which
+    # we loaded the module
+    rpm.spec
 
 
 if __name__ == "__main__":
