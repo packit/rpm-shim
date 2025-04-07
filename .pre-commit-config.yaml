@@ -31,7 +31,7 @@ repos:
       - id: mixed-line-ending
       - id: trailing-whitespace
   - repo: https://github.com/PyCQA/flake8
-    rev: 6.0.0
+    rev: 7.2.0
     hooks:
       - id: flake8
         args:
@@ -54,4 +54,4 @@ repos:
       - id: check-rebase
         args:
           - https://github.com/packit/rpm-shim.git
-        stages: [manual, push]
+        stages: [manual, pre-push]
