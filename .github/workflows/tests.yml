@@ -19,8 +19,10 @@ jobs:
             install_deps_cmd: dnf -y install git-core python{3,3.11}-pip python3-rpm && python3 -m pip install -U requests && python3.11 -m pip install -U requests
           - base_image: ubi8:latest
             install_deps_cmd: dnf -y install git-core python3-pip python3-rpm
-          - base_image: opensuse/leap:latest
+          - base_image: registry.opensuse.org/opensuse/leap:latest
             install_deps_cmd: zypper -n install git-core python3-pip python3-rpm
+          - base_image: registry.suse.com/bci/python:3.11
+            install_deps_cmd: zypper -n install python311-rpm python3-rpm
           - base_image: ubuntu:latest
             install_deps_cmd: apt-get -y update && apt-get -y install git python3-pip python3-rpm
     steps:
