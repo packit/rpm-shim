@@ -64,8 +64,8 @@ def get_system_sitepackages_and_suffixes() -> List[Dict[str, List[str]]]:
     # try platform-python first (it could be the only interpreter present on the system)
     interpreters = [
         "/usr/libexec/platform-python",
-        f"/usr/bin/python{majorver}",
         f"/usr/bin/python{majorver}.{minorver}",
+        f"/usr/bin/python{majorver}",
     ]
     result = []
     for interpreter in interpreters:
