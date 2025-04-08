@@ -1,3 +1,7 @@
+# 0.4.0
+
+- rpm-shim now prefers the current interpreter for searching for the `rpm` module. (#22)
+
 # 0.3.1
 
 - Ignore extension suffixes if the interpreter is Python 2. (#18)
