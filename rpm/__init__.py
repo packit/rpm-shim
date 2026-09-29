@@ -217,10 +217,9 @@ def initialize() -> None:
 
 
 # avoid repeated initialization of the shim module
-try:
-    _shim_module_initializing_
-except NameError:
-    _shim_module_initializing_: bool = True
+_shim_module_initializing_: bool
+if "_shim_module_initializing_" not in globals():
+    _shim_module_initializing_ = True
     initialize()
 else:
     raise ShimAlreadyInitializingError
