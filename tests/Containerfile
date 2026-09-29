@@ -9,7 +9,19 @@ COPY . .
 ARG INSTALL_DEPS_CMD
 RUN sh -c "${INSTALL_DEPS_CMD}"
 
-RUN python3 -m pip install tox build || python3 -m pip install --break-system-packages tox build
+RUN for python in /usr/bin/python3 /usr/bin/python3.*; do \
+        case "$python" in \
+            *-config) continue ;; \
+        esac; \
+        if [ -x "$python" ] && "$python" -c 'pass' 2>/dev/null; then \
+            if "$python" -m pip install tox build || \
+               "$python" -m pip install --break-system-packages tox build; then \
+                exit 0; \
+            fi \
+        fi; \
+    done; \
+    echo "No Python 3 interpreter found" >&2; \
+    exit 1
 
 WORKDIR /
 ENTRYPOINT ["/entrypoint.sh"]
